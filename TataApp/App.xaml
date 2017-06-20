@@ -1,6 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="TataApp.App">
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:infra="clr-namespace:TataApp.Infrastructure;assembly=TataApp"
+    x:Class="TataApp.App">
 	<Application.Resources>
 		<!-- Application resource dictionary -->
+        <ResourceDictionary>
+            <!-- Se esta creando una clase Locator -->
+            <infra:InstanceLocator x:Key="Locator"/>
+
+            <!--Colors-->
+            <Color x:Key="MainColor">#255CE8</Color>
+            <Color x:Key="FontColor">#173899</Color>
+            <Color x:Key="AccentColor1">#FFFF52</Color>
+            <Color x:Key="AccentColor2">#FFD82B</Color>
+            <Color x:Key="BackgroundColor">#ffffff</Color>
+
+            <!-- Color Menu-->
+            <Color x:Key="MenuColor">#255CE8</Color>
+            <Color x:Key="MenuFontColor">#ffffff</Color>
+
+
+        </ResourceDictionary>
 	</Application.Resources>
 </Application>

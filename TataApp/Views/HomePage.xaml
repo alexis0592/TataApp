@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    x:Class="TataApp.Views.HomePage"
+    Title="Home"
+    BackgroundColor="{StaticResource BackgroundColor}">
+	<ContentPage.Content>
+        <StackLayout
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+        <Label
+            TextColor="{StaticResource FontColor}"
+            Text="Home Page">
+        </Label>
+    </StackLayout>
+	</ContentPage.Content>
+</ContentPage>
