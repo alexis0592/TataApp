@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using TataApp.Models;
 
 namespace TataApp.ViewModels
 {
@@ -13,19 +14,41 @@ namespace TataApp.ViewModels
 			get;
 			set;
 		}
+
+		public Employee Employee
+		{
+			get;
+			set;
+		}
         #endregion
 
         #region Constructors
         public MainViewModel()
         {
+            instance = this;
+
             Menu = new ObservableCollection<MenuItemViewModel>();
             Login = new LoginViewModel();
             LoadMenu();
         }
-        #endregion
+		#endregion
 
-        #region Methods
-        private void LoadMenu()
+		#region Singleton
+		private static MainViewModel instance;
+
+		public static MainViewModel GetInstance()
+		{
+			if (instance == null)
+			{
+				instance = new MainViewModel();
+			}
+
+			return instance;
+		}
+		#endregion
+
+		#region Methods
+		private void LoadMenu()
         {
             Menu.Add(new MenuItemViewModel
             {

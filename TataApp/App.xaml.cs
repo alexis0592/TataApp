@@ -1,24 +1,43 @@
-﻿using TataApp.Views;
+﻿using System;
+using TataApp.Models;
+using TataApp.Services;
+using TataApp.ViewModels;
+using TataApp.Views;
 using Xamarin.Forms;
 
 namespace TataApp
 {
     public partial class App : Application
     {
-        public static NavigationPage Navigator
-        {
-            get;
-            internal set;
-        }
+        #region Attributes
+        private DataService dataService;
+        #endregion
 
+        #region Properties
+        public static NavigationPage Navigator {get; internal set;}
+        #endregion
+
+        #region Constructors
         public App()
         {
             InitializeComponent();
+            dataService = new DataService();
 
-            //MainPage = new LoginPage();
-            MainPage = new MasterPage();
+            var employee = dataService.First<Employee>(false);
+            if(employee != null && employee.IsRemembered && 
+               employee.TokenExpires > DateTime.Now){
+
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.Employee = employee;
+                MainPage = new MasterPage();
+            }else{
+                MainPage = new LoginPage();
+            }
+
         }
+        #endregion
 
+        #region Methods
         protected override void OnStart()
         {
             // Handle when your app starts
@@ -33,5 +52,6 @@ namespace TataApp
         {
             // Handle when your app resumes
         }
+        #endregion
     }
 }

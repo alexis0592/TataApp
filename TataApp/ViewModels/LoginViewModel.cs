@@ -4,6 +4,7 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using TataApp.Models;
 using TataApp.Services;
+using Xamarin.Forms;
 
 namespace TataApp.ViewModels
 {
@@ -16,8 +17,8 @@ namespace TataApp.ViewModels
         #region Attributes
         private ApiService apiService;
         private DialogService dialogService;
-        //private NavigationService navigationService;
-        //private DataService dataService;
+        private NavigationService navigationService;
+        private DataService dataService;
         private string email;
         private string password;
         private bool isRunning;
@@ -112,9 +113,14 @@ namespace TataApp.ViewModels
         {
 			apiService = new ApiService();
 			dialogService = new DialogService();
+            navigationService = new NavigationService();
+            dataService = new DataService();
 
             IsRemembered = true;
             IsEnabled = true;
+
+            Email = "jzuluaga55@gmail.com";
+            Password = "123456";
         }
         #endregion
 
@@ -144,8 +150,10 @@ namespace TataApp.ViewModels
 			IsRunning = true;
 			IsEnabled = false;
 
+            var urlAPI = Application.Current.Resources["URLAPI"].ToString();
+
 			var token = await apiService.GetToken(
-				"http://tataappapi.azurewebsites.net",
+                urlAPI,
 				Email,
 				Password);
 
@@ -168,7 +176,7 @@ namespace TataApp.ViewModels
 			}
 
 			var response = await apiService.GetEmployeeByEmailOrCode(
-				"http://tataappapi.azurewebsites.net",
+                urlAPI,
 				"/api",
 				"/Employees/GetGetEmployeeByEmailOrCode",
 				token.TokenType,
@@ -187,7 +195,18 @@ namespace TataApp.ViewModels
 			IsEnabled = true;
 
 			var employee = (Employee)response.Result;
-			await dialogService.ShowMessage("Taran!!", "Welcome: " + employee.FullName);
+
+            employee.AccessToken = token.AccessToken;
+            employee.IsRemembered = IsRemembered;
+            employee.Password = Password;
+            employee.TokenExpires = token.Expires;
+            employee.TokenType = token.TokenType;
+
+            dataService.DeleteAllAndInsert(employee);
+
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Employee = employee;
+            navigationService.SetMainPage("MasterPage");
         }
 
         #endregion

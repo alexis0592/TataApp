@@ -1,9 +1,12 @@
 ﻿using System;
+using SQLite.Net.Attributes;
+using Xamarin.Forms;
+
 namespace TataApp.Models
 {
     public class Employee
     {
-
+        [PrimaryKey]
 		public int EmployeeId { get; set; }
 
 		public string FirstName { get; set; }
@@ -26,6 +29,37 @@ namespace TataApp.Models
 
 		public string Address { get; set; }
 
+		public byte[] ImageArray { get; internal set; }
+
+		public string AccessToken { get; set; }
+
+		public string TokenType { get; set; }
+
+		public DateTime TokenExpires { get; set; }
+
+		public string Password { get; set; }
+
+		public bool IsRemembered { get; set; }
+
 		public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
+
+		public string FullPicture
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(Picture))
+				{
+					return "contact.png";
+				}
+
+				var urlBackend = Application.Current.Resources["URLBackend"].ToString();
+				return string.Format("{0}/{1}", urlBackend, Picture.Substring(1));
+			}
+		}
+
+        public override int GetHashCode()
+        {
+            return EmployeeId;
+        }
     }
 }
