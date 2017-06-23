@@ -15,10 +15,11 @@ namespace TataApp
 
         #region Properties
         public static NavigationPage Navigator {get; internal set;}
-        #endregion
+		public static MasterPage Master { get; internal set; }
+		#endregion
 
-        #region Constructors
-        public App()
+		#region Constructors
+		public App()
         {
             InitializeComponent();
             dataService = new DataService();

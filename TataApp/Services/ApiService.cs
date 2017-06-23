@@ -5,14 +5,16 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Plugin.Connectivity;
 using TataApp.Models;
+using Xamarin.Forms;
 
 namespace TataApp.Services
 {
     public class ApiService
     {
 
-		public async Task<TokenResponse> GetToken(string urlBase, string username, string password)
+        public async Task<TokenResponse> GetToken(string urlBase, string username, string password)
 		{
 			try
 			{
@@ -33,7 +35,7 @@ namespace TataApp.Services
 		}
 
 		public async Task<Response> GetEmployeeByEmailOrCode(
-			string urlBase,
+            string urlBase,
 			string servicePrefix,
 			string controller,
 			string tokenType,
@@ -82,8 +84,7 @@ namespace TataApp.Services
 			}
 		}
 
-		public async Task<Response> Get<T>(
-			string urlBase, string servicePrefix, string controller,
+		public async Task<Response> Get<T>(string urlBase, string servicePrefix, string controller,
 			string tokenType, string accessToken, int id)
 		{
 			try
@@ -122,8 +123,7 @@ namespace TataApp.Services
 			}
 		}
 
-		public async Task<Response> GetList<T>(
-			string urlBase, string servicePrefix, string controller,
+		public async Task<Response> GetList<T>(string urlBase, string servicePrefix, string controller,
 			string tokenType, string accessToken)
 		{
 			try
@@ -162,8 +162,47 @@ namespace TataApp.Services
 			}
 		}
 
-		public async Task<Response> Post<T>(
-			string urlBase, string servicePrefix, string controller,
+		public async Task<Response> GetList<T>(string urlBase, string servicePrefix, string controller,
+	    string tokenType, string accessToken, int id)
+		{
+			try
+			{
+				var client = new HttpClient();
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
+				client.BaseAddress = new Uri(urlBase);
+                var url = string.Format("{0}{1}/{2}", servicePrefix, controller, id);
+				var response = await client.GetAsync(url);
+
+				if (!response.IsSuccessStatusCode)
+				{
+					return new Response
+					{
+						IsSuccess = false,
+						Message = response.StatusCode.ToString(),
+					};
+				}
+
+				var result = await response.Content.ReadAsStringAsync();
+				var list = JsonConvert.DeserializeObject<List<T>>(result);
+				return new Response
+				{
+					IsSuccess = true,
+					Message = "Ok",
+					Result = list,
+				};
+			}
+			catch (Exception ex)
+			{
+				return new Response
+				{
+					IsSuccess = false,
+					Message = ex.Message,
+				};
+			}
+		}
+
+
+		public async Task<Response> Post<T>(string urlBase, string servicePrefix, string controller,
 			string tokenType, string accessToken, T model)
 		{
 			try
@@ -205,8 +244,7 @@ namespace TataApp.Services
 			}
 		}
 
-		public async Task<Response> Post<T>(
-			string urlBase, string servicePrefix, string controller, T model)
+		public async Task<Response> Post<T>(string urlBase, string servicePrefix, string controller, T model)
 		{
 			try
 			{
@@ -246,8 +284,7 @@ namespace TataApp.Services
 			}
 		}
 
-		public async Task<Response> Put<T>(
-			string urlBase, string servicePrefix, string controller,
+		public async Task<Response> Put<T>(string urlBase, string servicePrefix, string controller,
 			string tokenType, string accessToken, T model)
 		{
 			try
@@ -289,8 +326,7 @@ namespace TataApp.Services
 			}
 		}
 
-		public async Task<Response> Delete<T>(
-			string urlBase, string servicePrefix, string controller,
+		public async Task<Response> Delete<T>(string urlBase, string servicePrefix, string controller,
 			string tokenType, string accessToken, T model)
 		{
 			try
@@ -325,6 +361,34 @@ namespace TataApp.Services
 				};
 			}
 		}
+
+        public async Task<Response> CheckConnectivity(){
+            
+            if (!CrossConnectivity.Current.IsConnected){
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "Please turn on your internet settings",
+                };
+			}
+
+			var isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
+
+			if (!isReachable)
+			{
+                return new Response
+                {
+                    IsSuccess = false,
+                    Message = "Check your internet connection",
+                };
+			}
+
+            return new Response
+            {
+                IsSuccess = true,
+                Message = "Ok",
+            };
+        }
     }
 
 }

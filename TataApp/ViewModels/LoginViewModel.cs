@@ -119,8 +119,8 @@ namespace TataApp.ViewModels
             IsRemembered = true;
             IsEnabled = true;
 
-            Email = "jzuluaga55@gmail.com";
-            Password = "123456";
+            Email = "alexis.cal.y@gmail.com";
+            Password = "alexis0592";
         }
         #endregion
 
@@ -149,6 +149,15 @@ namespace TataApp.ViewModels
 
 			IsRunning = true;
 			IsEnabled = false;
+
+            var checkConnectivity = await apiService.CheckConnectivity();
+
+            if(!checkConnectivity.IsSuccess){
+                IsRunning = false;
+				IsEnabled = true;
+                await dialogService.ShowMessage("Error", checkConnectivity.Message);
+                return;
+            }
 
             var urlAPI = Application.Current.Resources["URLAPI"].ToString();
 
