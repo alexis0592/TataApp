@@ -34,6 +34,18 @@ namespace TataApp.ViewModels
             set;
         }
 
+        public LocationsViewModel Locations
+        {
+            get;
+            set;
+        }
+
+        public EditUserViewModel EditUser
+        {
+            get;
+            set;
+        }
+
         public Employee Employee
         {
             get;
@@ -86,10 +98,17 @@ namespace TataApp.ViewModels
 
             Menu.Add(new MenuItemViewModel
             {
-                Title = "Localizate Employees",
+                Title = "Locations",
                 Icon = "ic_my_location.png",
-                PageName = "LocalizatePage"
+                PageName = "LocationsPage"
             });
+
+			Menu.Add(new MenuItemViewModel
+			{
+				Title = "My Profile",
+				Icon = "ic_my_location.png",
+				PageName = "EditUserPage"
+			});
 
             Menu.Add(new MenuItemViewModel
             {

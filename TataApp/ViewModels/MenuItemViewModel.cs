@@ -29,7 +29,7 @@ namespace TataApp.ViewModels
         {
             if(PageName == "LoginPage"){
 
-                navigationService.SetMainPage("LoginPage");
+                navigationService.SetMainPage(PageName);
             }else{
 
                 var mainViewModel = MainViewModel.GetInstance();
@@ -37,11 +37,18 @@ namespace TataApp.ViewModels
                 switch(PageName){
                     case "TimesPage":
                         mainViewModel.Times = new TimesViewModel();
-                        await navigationService.Navigate("TimesPage");
+                        break;
+					case "LocationsPage":
+                        mainViewModel.Locations = new LocationsViewModel();
+						break;
+                    case "EditUserPage":
+                        mainViewModel.EditUser = new EditUserViewModel();
                         break;
                     default:
                         break;
                 }
+
+                await navigationService.Navigate(PageName);
             }
 
         }
