@@ -363,7 +363,6 @@ namespace TataApp.Services
 		}
 
         public async Task<Response> CheckConnectivity(){
-            
             if (!CrossConnectivity.Current.IsConnected){
                 return new Response
                 {
@@ -389,6 +388,87 @@ namespace TataApp.Services
                 Message = "Ok",
             };
         }
+
+		public async Task<TokenResponse> LoginFacebook(
+			string urlBase,
+			string servicePrefix,
+			string controller,
+			FacebookResponse profile)
+		{
+			try
+			{
+				var request = JsonConvert.SerializeObject(profile);
+				var content = new StringContent(request, Encoding.UTF8, "application/json");
+				var client = new HttpClient();
+				client.BaseAddress = new Uri(urlBase);
+				var url = string.Format("{0}{1}", servicePrefix, controller);
+				var response = await client.PostAsync(url, content);
+
+				if (!response.IsSuccessStatusCode)
+				{
+					return null;
+				}
+
+				var tokenResponse = await GetToken(urlBase, profile.Id, profile.Id);
+				return tokenResponse;
+			}
+			catch
+			{
+				return null;
+			}
+		}
+
+		public async Task<Response> SendNotification(
+			string urlBase,
+			string servicePrefix,
+			string controller,
+			string tokenType,
+			string accessToken,
+			string from,
+			string to,
+			string message)
+		{
+			try
+			{
+				var notificationRequest = new NotificationRequest
+				{
+					From = from,
+					To = to,
+					Message = message,
+				};
+
+				var request = JsonConvert.SerializeObject(notificationRequest);
+				var content = new StringContent(request, Encoding.UTF8, "application/json");
+				var client = new HttpClient();
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(tokenType, accessToken);
+				client.BaseAddress = new Uri(urlBase);
+				var url = string.Format("{0}{1}", servicePrefix, controller);
+				var response = await client.PostAsync(url, content);
+
+				if (!response.IsSuccessStatusCode)
+				{
+					return new Response
+					{
+						IsSuccess = false,
+						Message = response.StatusCode.ToString(),
+					};
+				}
+
+				return new Response
+				{
+					IsSuccess = true,
+					Message = "Notification sent.",
+				};
+			}
+			catch (Exception ex)
+			{
+				return new Response
+				{
+					IsSuccess = false,
+					Message = ex.Message,
+				};
+			}
+		}
     }
 
 }

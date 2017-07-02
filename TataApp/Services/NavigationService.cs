@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Threading.Tasks;
 using TataApp.Views;
 
@@ -16,6 +16,9 @@ namespace TataApp.Services
 					break;
 				case "LoginPage":
 					App.Current.MainPage = new LoginPage();
+					break;
+				case "LoginFacebookPage":
+					App.Current.MainPage = new LoginFacebookPage();
 					break;
 				default:
 					break;
@@ -40,6 +43,12 @@ namespace TataApp.Services
                 case "EditUserPage":
                     await App.Navigator.PushAsync(new EditUserPage());
                     break;
+				case "EmployeesPage":
+                    await App.Navigator.PushAsync(new EmployeesPage());
+					break;
+				case "EmployeeDetailPage":
+                    await App.Navigator.PushAsync(new EmployeeDetailPage());
+					break;
 				default:
 					break;
 			}

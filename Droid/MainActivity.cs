@@ -13,8 +13,33 @@ namespace TataApp.Droid
     [Activity(Label = "TataApp.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        protected override void OnCreate(Bundle bundle)
+
+		#region Singleton
+
+		private static MainActivity instance;
+
+		public static MainActivity GetInstance()
+
+		{
+
+			if (instance == null)
+
+			{
+
+				instance = new MainActivity();
+
+			}
+
+			return instance;
+
+		}
+
+		#endregion
+
+		protected override void OnCreate(Bundle bundle)
         {
+            instance = this;
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

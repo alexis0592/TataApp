@@ -2,8 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using TataApp.Interfaces;
 using TataApp.Models;
 using TataApp.Services;
+using Xamarin.Forms;
 
 namespace TataApp.ViewModels
 {
@@ -52,6 +54,18 @@ namespace TataApp.ViewModels
             set;
         }
 
+        public EmployeesViewModel Employees
+        {
+            get;
+            set;
+        }
+
+        public EmployeeDetailViewModel EmployeeDetail
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region Constructors
@@ -77,9 +91,15 @@ namespace TataApp.ViewModels
 
             return instance;
         }
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
+		public void RegisterDevice()
+		{
+			var register = DependencyService.Get<IRegisterDevice>();
+			register.RegisterDevice();
+		}
+
         private void LoadMenu()
         {
             Menu.Add(new MenuItemViewModel
@@ -91,9 +111,9 @@ namespace TataApp.ViewModels
 
             Menu.Add(new MenuItemViewModel
             {
-                Title = "Sickleaves",
-                Icon = "ic_favorite.png",
-                PageName = "SickleavesPage"
+                Title = "Employees",
+                Icon = "ic_action_contacts.png",
+                PageName = "EmployeesPage"
             });
 
             Menu.Add(new MenuItemViewModel

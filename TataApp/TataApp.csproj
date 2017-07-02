@@ -59,6 +59,15 @@
     <EmbeddedResource Include="Views\EditUserPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\LoginFacebookPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\EmployeesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\EmployeeDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -122,6 +131,22 @@
       <DependentUpon>EditUserPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\EditUserViewModel.cs" />
+    <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\FacebookResponse.cs" />
+    <Compile Include="Views\LoginFacebookPage.xaml.cs">
+      <DependentUpon>LoginFacebookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmployeesPage.xaml.cs">
+      <DependentUpon>EmployeesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\EmployeesViewModel.cs" />
+    <Compile Include="ViewModels\EmployeeItemViewModel.cs" />
+    <Compile Include="Views\EmployeeDetailPage.xaml.cs">
+      <DependentUpon>EmployeeDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\EmployeeDetailViewModel.cs" />
+    <Compile Include="Models\NotificationRequest.cs" />
+    <Compile Include="Interfaces\IRegisterDevice.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation">

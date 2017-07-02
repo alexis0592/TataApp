@@ -44,6 +44,9 @@ namespace TataApp.ViewModels
                     case "EditUserPage":
                         mainViewModel.EditUser = new EditUserViewModel();
                         break;
+                    case "EmployeesPage":
+                        mainViewModel.Employees = new EmployeesViewModel();
+                        break;
                     default:
                         break;
                 }

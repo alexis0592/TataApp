@@ -215,8 +215,19 @@ namespace TataApp.ViewModels
 
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Employee = employee;
+            mainViewModel.RegisterDevice();
             navigationService.SetMainPage("MasterPage");
         }
+
+		public ICommand LoginFacebookCommand
+		{
+			get { return new RelayCommand(LoginFacebook); }
+		}
+
+		void LoginFacebook()
+		{
+			navigationService.SetMainPage("LoginFacebookPage");
+		}
 
         #endregion
     }
