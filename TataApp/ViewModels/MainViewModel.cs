@@ -40,7 +40,7 @@ namespace TataApp.ViewModels
             set;
         }
 
-        public EditUserViewModel EditUser
+        public EditUserViewModel MyProfile
         {
             get;
             set;
@@ -82,6 +82,13 @@ namespace TataApp.ViewModels
         #region Methods
         private void LoadMenu()
         {
+			Menu.Add(new MenuItemViewModel
+			{
+				Title = "My Profile",
+				Icon = "my_profle.png",
+				PageName = "EditUserPage"
+			});
+
             Menu.Add(new MenuItemViewModel
             {
                 Title = "Register Time",
@@ -103,13 +110,6 @@ namespace TataApp.ViewModels
                 PageName = "LocationsPage"
             });
 
-			Menu.Add(new MenuItemViewModel
-			{
-				Title = "My Profile",
-				Icon = "ic_my_location.png",
-				PageName = "EditUserPage"
-			});
-
             Menu.Add(new MenuItemViewModel
             {
                 Title = "Sign out",
@@ -129,6 +129,7 @@ namespace TataApp.ViewModels
             NewTime = new NewTimeViewModel();
             await navigationService.Navigate("NewTimePage");
         }
+
         #endregion
     }
 }

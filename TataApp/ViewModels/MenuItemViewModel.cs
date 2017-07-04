@@ -42,7 +42,7 @@ namespace TataApp.ViewModels
                         mainViewModel.Locations = new LocationsViewModel();
 						break;
                     case "EditUserPage":
-                        mainViewModel.EditUser = new EditUserViewModel();
+                        mainViewModel.MyProfile = new EditUserViewModel();
                         break;
                     default:
                         break;
