@@ -46,6 +46,12 @@ namespace TataApp.ViewModels
             set;
         }
 
+        public ChangePasswordViewModel ChangePassword
+        {
+            get;
+            set;
+        }
+
         public Employee Employee
         {
             get;

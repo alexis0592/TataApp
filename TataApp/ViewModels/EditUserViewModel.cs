@@ -361,7 +361,7 @@ namespace TataApp.ViewModels
             };
 
             var urlApi = Application.Current.Resources["URLAPI"].ToString();
-            var response = await apiService.Post(urlApi,
+            var response = await apiService.Put(urlApi,
                                                "/api",
                                                "/Employees",
                                                 mainViewModel.Employee.TokenType,
@@ -389,6 +389,17 @@ namespace TataApp.ViewModels
         public ICommand TakePictureCommand
         {
             get { return new RelayCommand(TakePicture); }
+        }
+
+        public ICommand ChangePasswordCommand
+        {
+            get { return new RelayCommand(ChangePassword); }
+        }
+
+        private async void ChangePassword()
+        {
+            mainViewModel.ChangePassword = new ChangePasswordViewModel();
+            await navigationService.Navigate("ChangePasswordPage");
         }
         #endregion
 

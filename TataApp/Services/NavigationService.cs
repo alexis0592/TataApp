@@ -40,6 +40,9 @@ namespace TataApp.Services
                 case "EditUserPage":
                     await App.Navigator.PushAsync(new EditUserPage());
                     break;
+				case "ChangePasswordPage":
+                    await App.Navigator.PushAsync(new ChangePasswordPage());
+					break;
 				default:
 					break;
 			}
