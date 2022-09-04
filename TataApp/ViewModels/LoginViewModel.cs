@@ -119,8 +119,8 @@ namespace TataApp.ViewModels
             IsRemembered = true;
             IsEnabled = true;
 
-            Email = "alexis.cal.y@gmail.com";
-            Password = "alexis0592";
+            Email = "";
+            Password = "";
         }
         #endregion
 
